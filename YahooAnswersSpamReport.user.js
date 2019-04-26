@@ -1,7 +1,7 @@
 "use strict";function _toConsumableArray(a){return _arrayWithoutHoles(a)||_iterableToArray(a)||_nonIterableSpread()}function _nonIterableSpread(){throw new TypeError("Invalid attempt to spread non-iterable instance")}function _iterableToArray(a){if(Symbol.iterator in Object(a)||"[object Arguments]"===Object.prototype.toString.call(a))return Array.from(a)}function _arrayWithoutHoles(a){if(Array.isArray(a)){for(var b=0,c=Array(a.length);b<a.length;b++)c[b]=a[b];return c}}// ==UserScript==
 // @name         YahooAnswersSpamReport
 // @namespace    https://2yc.tw
-// @version      0.1.0
+// @version      0.2.0
 // @description  Make it easy to report a spam on Yahoo! Answers
 // @author       YY
 // @license      MIT
