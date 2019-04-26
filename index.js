@@ -1,4 +1,3 @@
-//
 // ==UserScript==
 // @name         YahooAnswersSpamReport
 // @namespace    https://2yc.tw
@@ -15,11 +14,21 @@
 // ==/UserScript==
 
 (() => {
+  const REPORTED_LIST = '@YahooAnswersSpanReport:reportedList';
+  const MAX_REPORTED_RECORD = 50;
   const _reportIcon = document.createElement('span');
   const _reportBtn = document.createElement('span');
   let _spamNode;
   let _currentQid;
   let _currentAid;
+
+  function initStorage() {
+    if (!window.localStorage) {
+      window.localStorage = {};
+    }
+
+    window.localStorage[REPORTED_LIST] = window.localStorage[REPORTED_LIST] || JSON.stringify([]);
+  }
 
   function initBtn() {
     _reportIcon.className = 'rptabuse Wpx-20 Hpx-20 D-ib shared-sprite reportabuse-icon Va-tb';
@@ -95,6 +104,19 @@
     _spamNode.style.opacity = '0.1';
   }
 
+  function updateReportedList() {
+    const id = _currentAid ? _currentAid : _currentQid;
+    const list = JSON.parse(window.localStorage[REPORTED_LIST]);
+    if (!list.includes(id)) {
+      const newList = [...list, id];
+      if (newList.length > MAX_REPORTED_RECORD) {
+        newList.shift();
+      }
+
+      window.localStorage[REPORTED_LIST] = JSON.stringify(newList);
+    }
+  }
+
   function showBtnOnSpamNode() {
     if (!_spamNode.className.includes('Pos-r')) {
       _spamNode.className += ' Pos-r';
@@ -136,6 +158,7 @@
   function handleReport() {
     postReport().then(() => {
       alert('Done!');
+      updateReportedList();
       markSpam();
     });
   }
@@ -144,6 +167,7 @@
    * init
    */
   if (window.ANSWERS.si && window.ANSWERS.yi) {
+    initStorage();
     initBtn();
     bindEvent();
   }
