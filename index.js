@@ -18,6 +18,7 @@
   const MAX_REPORTED_RECORD = 50;
   const _reportIcon = document.createElement('span');
   const _reportBtn = document.createElement('span');
+  let _reportedMark;
   let _spamNode;
   let _currentQid;
   let _currentAid;
@@ -30,10 +31,9 @@
     window.localStorage[REPORTED_LIST] = window.localStorage[REPORTED_LIST] || JSON.stringify([]);
   }
 
-  function initBtn() {
+  function initElement() {
     _reportIcon.className = 'rptabuse Wpx-20 Hpx-20 D-ib shared-sprite reportabuse-icon Va-tb';
 
-    _reportBtn.id = 'spam_ReportBtn';
     _reportBtn.innerText = ' SPAM';
     _reportBtn.style.right = '10px';
     _reportBtn.style.top = '10px';
@@ -44,6 +44,10 @@
     _reportBtn.style.fontSize = '12px';
     _reportBtn.style.padding = '1px 5px';
     _reportBtn.prepend(_reportIcon);
+
+    _reportedMark = _reportBtn.cloneNode();
+    _reportedMark.style.cursor = 'default';
+    _reportedMark.innerText = 'Reported';
   }
 
   function bindEvent() {
@@ -117,13 +121,15 @@
     }
   }
 
-  function showBtnOnSpamNode() {
+  function showBtnOnSpamNode(reported) {
+    handleHideBtn();
     if (!_spamNode.className.includes('Pos-r')) {
       _spamNode.className += ' Pos-r';
     }
 
-    _reportBtn.style.display = 'initial';
-    _spamNode.appendChild(_reportBtn);
+    const ele = reported ? _reportedMark : _reportBtn;
+    ele.style.display = 'initial';
+    _spamNode.appendChild(ele);
   }
 
   /**
@@ -133,12 +139,14 @@
     if (e.target.className.includes('qTile')) {
       _spamNode = e.target;
       _currentQid = _spamNode.getAttribute('data-qid');
-      showBtnOnSpamNode();
+      const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(_currentQid);
+      showBtnOnSpamNode(reported);
     }
   }
 
   function handleHideBtn() {
     _reportBtn.style.display = 'none';
+    _reportedMark.style.display = 'none';
   }
 
   function handleMouseenterQuestionDetail(e) {
@@ -168,7 +176,7 @@
    */
   if (window.ANSWERS.si && window.ANSWERS.yi) {
     initStorage();
-    initBtn();
+    initElement();
     bindEvent();
   }
 })();
