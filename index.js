@@ -153,14 +153,16 @@
     _spamNode = e.target;
     _currentQid = _spamNode.getAttribute('data-ya-question-id');
     _currentAid = null;
-    showBtnOnSpamNode();
+    const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(_currentQid);
+    showBtnOnSpamNode(reported);
   }
 
   function handleMouseenterAnswer(e) {
     _spamNode = e.target;
     _currentQid = _spamNode.getAttribute('data-ya-question-id');
     _currentAid = _spamNode.getAttribute('data-ya-answer-id');
-    showBtnOnSpamNode();
+    const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(_currentAid);
+    showBtnOnSpamNode(reported);
   }
 
   function handleReport() {
