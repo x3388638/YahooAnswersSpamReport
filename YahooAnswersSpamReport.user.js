@@ -1,4 +1,5 @@
-"use strict";// ==UserScript==
+"use strict";//
+// ==UserScript==
 // @name         YahooAnswersSpamReport
 // @namespace    https://2yc.tw
 // @version      0.1.0

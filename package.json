@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel index.js -o index.user.js"
+    "build": "babel index.js -o YahooAnswersSpamReport.user.js"
   },
   "author": "YY",
   "license": "MIT",

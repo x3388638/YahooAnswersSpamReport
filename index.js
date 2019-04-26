@@ -1,3 +1,4 @@
+//
 // ==UserScript==
 // @name         YahooAnswersSpamReport
 // @namespace    https://2yc.tw
