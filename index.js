@@ -2,9 +2,11 @@
 // @name         YahooAnswersSpamReport
 // @namespace    https://2yc.tw
 // @version      0.1.0
-// @description  try to take over the world!
+// @description 
 // @author       YY
 // @license      MIT
+// @homepage     https://github.com/x3388638/YahooAnswersSpamReport
+// @updateURL    https://openuserjs.org/meta/x3388638/YahooAnswersSpamReport.meta.js
 // @match        https://*.answers.yahoo.com
 // @match        https://*.answers.yahoo.com/answer
 // @match        https://*.answers.yahoo.com/question/*
