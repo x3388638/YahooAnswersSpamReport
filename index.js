@@ -104,7 +104,7 @@
     }).then(res => res.json());
   }
 
-  function markSpam() {
+  function maskSpam() {
     _spamNode.style.opacity = '0.1';
   }
 
@@ -169,7 +169,7 @@
     postReport().then(() => {
       alert('Done!');
       updateReportedList();
-      markSpam();
+      maskSpam();
     });
   }
 
