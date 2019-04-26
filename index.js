@@ -6,6 +6,7 @@
 // @author       YY
 // @license      MIT
 // @match        https://*.answers.yahoo.com
+// @match        https://*.answers.yahoo.com/answer
 // @match        https://*.answers.yahoo.com/question/*
 // @grant        none
 // ==/UserScript==
