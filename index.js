@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YahooAnswersSpamReport
 // @namespace    https://2yc.tw
-// @version      0.2.0
+// @version      0.2.1
 // @description  Make it easy to report a spam on Yahoo! Answers
 // @author       YY
 // @license      MIT
@@ -10,6 +10,7 @@
 // @match        https://*.answers.yahoo.com
 // @match        https://*.answers.yahoo.com/answer*
 // @match        https://*.answers.yahoo.com/question/*
+// @match        https://*.answers.yahoo.com/dir/index*
 // @grant        none
 // ==/UserScript==
 
@@ -68,15 +69,15 @@
      * QA page
      */
     if (questionDetail) {
-      const nodes = document.querySelectorAll('li[data-ya-type="answer"], #ya-best-answer');
+      const answerNodes = document.querySelectorAll('li[data-ya-type="answer"], #ya-best-answer');
       // show reportBtn for question
       questionDetail.addEventListener('mouseenter', handleMouseenterQuestionDetail);
       // hide reportBtn for question
       questionDetail.addEventListener('mouseleave', handleHideBtn);
       // show/hide reportBtn for best answer and other answers
-      for (let i = 0; i < nodes.length; i ++) {
-        nodes[i].addEventListener('mouseenter', handleMouseenterAnswer);
-        nodes[i].addEventListener('mouseleave', handleHideBtn);
+      for (let i = 0; i < answerNodes.length; i ++) {
+        answerNodes[i].addEventListener('mouseenter', handleMouseenterAnswer);
+        answerNodes[i].addEventListener('mouseleave', handleHideBtn);
       }
     }
 
@@ -95,8 +96,8 @@
     data.append('crumb', window.ANSWERS.crumb);
     data.append('action', actionType);
     data.append('qid', _currentQid);
-    data.append('abtype', 'TOS');
-    data.append('desc', '');
+    data.append('abtype', 'CGV');
+    data.append('desc', 'SPAM');
 
     return fetch('/_post?name=YAReportAbuseModule&abtype=TOS', {
       method: 'POST',
@@ -109,10 +110,10 @@
   }
 
   function updateReportedList() {
-    const id = _currentAid ? _currentAid : _currentQid;
+    // only record reported question, no need to record answer
     const list = JSON.parse(window.localStorage[REPORTED_LIST]);
-    if (!list.includes(id)) {
-      const newList = [...list, id];
+    if (!_currentAid && !list.includes(_currentQid)) {
+      const newList = [...list, _currentQid];
       if (newList.length > MAX_REPORTED_RECORD) {
         newList.shift();
       }
@@ -153,15 +154,19 @@
     _spamNode = e.target;
     _currentQid = _spamNode.getAttribute('data-ya-question-id');
     _currentAid = null;
-    const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(_currentQid);
+    const reported = !_spamNode.querySelector('div>div>.rptabuse');
     showBtnOnSpamNode(reported);
   }
 
   function handleMouseenterAnswer(e) {
     _spamNode = e.target;
+    if (_spamNode.id === 'ya-best-answer') {
+      _spamNode = _spamNode.firstElementChild;
+    }
+
     _currentQid = _spamNode.getAttribute('data-ya-question-id');
     _currentAid = _spamNode.getAttribute('data-ya-answer-id');
-    const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(_currentAid);
+    const reported = !_spamNode.querySelector('div>div>.rptabuse');
     showBtnOnSpamNode(reported);
   }
 

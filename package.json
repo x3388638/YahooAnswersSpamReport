@@ -1,7 +1,7 @@
 {
   "name": "yahooanswersspamreport",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.2.1",
+  "description": "Make it easy to report a spam on Yahoo! Answers",
   "main": "index.js",
   "scripts": {
     "build": "babel index.js -o YahooAnswersSpamReport.user.js"
