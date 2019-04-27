@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         YahooAnswersSpamReport
 // @namespace    https://2yc.tw
-// @version      0.2.2
+// @version      0.2.3
 // @description  Make it easy to report a spam on Yahoo! Answers
 // @author       YY
 // @license      MIT
