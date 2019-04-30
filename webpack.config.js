@@ -13,10 +13,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [
-              '@babel/preset-env',
-              'minify',
-            ],
+            presets: ['@babel/preset-env', 'minify'],
             comments: false,
           },
         },

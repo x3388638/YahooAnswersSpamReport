@@ -15,11 +15,13 @@ import Thanos from './Thanos';
       window.localStorage = {};
     }
 
-    window.localStorage[REPORTED_LIST] = window.localStorage[REPORTED_LIST] || JSON.stringify([]);
+    window.localStorage[REPORTED_LIST] =
+      window.localStorage[REPORTED_LIST] || JSON.stringify([]);
   }
 
   function initElement() {
-    _reportIcon.className = 'rptabuse Wpx-20 Hpx-20 D-ib shared-sprite reportabuse-icon Va-tb';
+    _reportIcon.className =
+      'rptabuse Wpx-20 Hpx-20 D-ib shared-sprite reportabuse-icon Va-tb';
 
     _reportBtn.innerText = ' SPAM';
     _reportBtn.style.right = '10px';
@@ -55,9 +57,14 @@ import Thanos from './Thanos';
      * QA page
      */
     if (questionDetail) {
-      const answerNodes = document.querySelectorAll('li[data-ya-type="answer"], #ya-best-answer');
+      const answerNodes = document.querySelectorAll(
+        'li[data-ya-type="answer"], #ya-best-answer',
+      );
       // show reportBtn for question
-      questionDetail.addEventListener('mouseenter', handleMouseenterQuestionDetail);
+      questionDetail.addEventListener(
+        'mouseenter',
+        handleMouseenterQuestionDetail,
+      );
       // hide reportBtn for question
       questionDetail.addEventListener('mouseleave', handleHideBtn);
       // show/hide reportBtn for best answer and other answers
@@ -127,7 +134,9 @@ import Thanos from './Thanos';
     if (e.target.className.includes('qTile')) {
       _spamNode = e.target;
       _currentQid = _spamNode.getAttribute('data-qid');
-      const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(_currentQid);
+      const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(
+        _currentQid,
+      );
       showBtnOnSpamNode(reported);
     }
   }
