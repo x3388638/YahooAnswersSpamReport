@@ -4,7 +4,7 @@
   "description": "Make it easy to report a spam on Yahoo! Answers",
   "main": "index.js",
   "scripts": {
-    "build": "babel index.js -o YahooAnswersSpamReport.user.js && cat metaBlock.js YahooAnswersSpamReport.user.js > temp && mv temp YahooAnswersSpamReport.user.js"
+    "build": "webpack && cat metaBlock.js YahooAnswersSpamReport.user.js > temp && mv temp YahooAnswersSpamReport.user.js"
   },
   "author": "YY",
   "license": "MIT",
@@ -12,13 +12,9 @@
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
-    "babel-preset-minify": "^0.5.0"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "minify"
-    ],
-    "comments": false
+    "babel-loader": "^8.0.5",
+    "babel-preset-minify": "^0.5.0",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
   }
 }
