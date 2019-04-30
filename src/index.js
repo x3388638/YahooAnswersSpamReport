@@ -1,4 +1,5 @@
 import Thanos from './Thanos';
+
 (() => {
   const REPORTED_LIST = '@YahooAnswersSpanReport:reportedList';
   const MAX_REPORTED_RECORD = 50;
@@ -60,7 +61,7 @@ import Thanos from './Thanos';
       // hide reportBtn for question
       questionDetail.addEventListener('mouseleave', handleHideBtn);
       // show/hide reportBtn for best answer and other answers
-      for (let i = 0; i < answerNodes.length; i ++) {
+      for (let i = 0; i < answerNodes.length; i++) {
         answerNodes[i].addEventListener('mouseenter', handleMouseenterAnswer);
         answerNodes[i].addEventListener('mouseleave', handleHideBtn);
       }
@@ -86,7 +87,7 @@ import Thanos from './Thanos';
 
     return fetch('/_post?name=YAReportAbuseModule&abtype=TOS', {
       method: 'POST',
-      body: data
+      body: data,
     }).then(res => res.json());
   }
 

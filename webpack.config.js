@@ -3,7 +3,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: __dirname,
-    filename: 'YahooAnswersSpamReport.user.js'
+    filename: 'YahooAnswersSpamReport.user.js',
   },
   module: {
     rules: [
@@ -15,12 +15,12 @@ module.exports = {
           options: {
             presets: [
               '@babel/preset-env',
-              'minify'
+              'minify',
             ],
-            comments: false
-          }
-        }
-      }
-    ]
-  }
-}
+            comments: false,
+          },
+        },
+      },
+    ],
+  },
+};
