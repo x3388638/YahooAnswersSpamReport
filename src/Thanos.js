@@ -31,7 +31,7 @@ function snap(element) {
 
   const rect = element.getBoundingClientRect();
   effectWrap.style.left = rect.left;
-  effectWrap.style.top = element.offsetTop;
+  effectWrap.style.top = rect.top;
   effectWrap.style.width = rect.width;
   effectWrap.style.height = rect.height;
 
@@ -59,7 +59,7 @@ function snap(element) {
       const c = canvasClone;
 
       const transitionDelay = TRANSITION_DELAY * (i / LAYER);
-      c.style.transitionDelay = transitionDelay;
+      c.style.transitionDelay = `${transitionDelay}s`;
       effectWrap.appendChild(c);
 
       setTimeout(() => {
