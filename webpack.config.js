@@ -5,6 +5,11 @@ module.exports = {
     path: __dirname,
     filename: 'YahooAnswersSpamReport.user.js',
   },
+  devtool: false,
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   module: {
     rules: [
       {
@@ -17,6 +22,10 @@ module.exports = {
             comments: false,
           },
         },
+      },
+      {
+        test: /\.css$/,
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
       },
     ],
   },

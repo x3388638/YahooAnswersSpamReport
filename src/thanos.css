@@ -1,0 +1,19 @@
+#effect {
+  position: absolute;
+  text-align: center;
+  pointer-events: none;
+  z-index: 999;
+  /* top: 0;
+  left: 0; */
+}
+
+#effect canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 1.5s ease-out, opacity 1.5s ease-out;
+}
+
+#effect.border canvas {
+  box-shadow: 0 0 0 1px red;
+}

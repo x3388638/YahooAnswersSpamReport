@@ -26,7 +26,8 @@
       "no-use-before-define": "off",
       "no-alert": "off",
       "operator-linebreak": "off",
-      "arrow-parens": "off"
+      "arrow-parens": "off",
+      "no-param-reassign": "off"
     }
   }
 }

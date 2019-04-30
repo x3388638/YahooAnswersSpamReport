@@ -99,7 +99,7 @@ import Thanos from './Thanos';
   }
 
   function maskSpam() {
-    Thanos.snap(_spamNode);
+    // Thanos.snap(_spamNode);
     // _spamNode.style.opacity = '0.1';
   }
 
@@ -167,6 +167,9 @@ import Thanos from './Thanos';
   }
 
   function handleReport() {
+    Thanos.snap(_spamNode);
+    return;
+    // eslint-disable-next-line no-unreachable
     postReport().then(() => {
       alert('Done!');
       updateReportedList();
