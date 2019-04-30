@@ -1,3 +1,4 @@
+import Thanos from './Thanos';
 (() => {
   const REPORTED_LIST = '@YahooAnswersSpanReport:reportedList';
   const MAX_REPORTED_RECORD = 50;
@@ -90,7 +91,8 @@
   }
 
   function maskSpam() {
-    _spamNode.style.opacity = '0.1';
+    Thanos.snap(_spamNode);
+    // _spamNode.style.opacity = '0.1';
   }
 
   function updateReportedList() {
