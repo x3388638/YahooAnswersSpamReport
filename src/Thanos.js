@@ -5,13 +5,12 @@ const LAYER = 32;
 const TRANSITION_DURATION = 1.5;
 const TRANSITION_DELAY = 1.35;
 const effectWrap = document.createElement('div');
-effectWrap.id = 'effect';
+effectWrap.id = 'effectWrap';
 
 function sampler(imgDatas, sourceImgData, width, height, layerCount) {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       for (let l = 0; l < 2; l++) {
-        // random piece index which tend to grow with x
         const pieceIndex = Math.floor(
           (layerCount * (Math.random() + (2 * x) / width)) / 3,
         );
@@ -37,30 +36,24 @@ function snap(element) {
 
   html2canvas(element, {
     backgroundColor: null,
+    logging: false,
   }).then(canvas => {
     const context = canvas.getContext('2d');
     const { width, height } = canvas;
-
-    // get element imageData
     const imgData = context.getImageData(0, 0, width, height);
-
-    // init empty imageData
     const effectImgDatas = [];
     for (let i = 0; i < LAYER; i++) {
       effectImgDatas.push(context.createImageData(width, height));
     }
 
     sampler(effectImgDatas, imgData, width, height, LAYER);
-
-    // create cloned canvases
     for (let i = 0; i < LAYER; i++) {
       const canvasClone = canvas.cloneNode();
       canvasClone.getContext('2d').putImageData(effectImgDatas[i], 0, 0);
-      const c = canvasClone;
 
       const transitionDelay = TRANSITION_DELAY * (i / LAYER);
-      c.style.transitionDelay = `${transitionDelay}s`;
-      effectWrap.appendChild(c);
+      canvasClone.style.transitionDelay = `${transitionDelay}s`;
+      effectWrap.appendChild(canvasClone);
 
       setTimeout(() => {
         const rotate1 = 15 * (Math.random() - 0.5);
@@ -69,13 +62,13 @@ function snap(element) {
         const translateX = 60 * Math.cos(fac);
         const translateY = 30 * Math.sin(fac);
 
-        c.style.transform = `rotate(${rotate1}deg) translate(${translateX}px, ${translateY}px) rotate(${rotate2}deg)`;
-        c.style.opacity = 0;
+        canvasClone.style.transform = `rotate(${rotate1}deg) translate(${translateX}px, ${translateY}px) rotate(${rotate2}deg)`;
+        canvasClone.style.opacity = 0;
 
         const removeDelay = 1e3 * (TRANSITION_DURATION + 1 + Math.random());
 
         setTimeout(() => {
-          c.parentNode.removeChild(c);
+          canvasClone.parentNode.removeChild(canvasClone);
         }, removeDelay);
       }, 0);
 
