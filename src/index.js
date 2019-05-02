@@ -5,8 +5,13 @@ import Thanos from './Thanos';
   const MAX_REPORTED_RECORD = 50;
   const _reportIcon = document.createElement('span');
   const _reportBtn = document.createElement('span');
+  const _spamData = {
+    node: null,
+    qid: null,
+    aid: null,
+  };
   let _reportedMark;
-  let _spamNode;
+  let _currentNode;
   let _currentQid;
   let _currentAid;
 
@@ -81,14 +86,14 @@ import Thanos from './Thanos';
   function postReport() {
     const data = new FormData();
     let actionType = 'reportq';
-    if (_currentAid) {
+    if (_spamData.aid) {
       actionType = 'reporta';
-      data.append('ansid', _currentAid);
+      data.append('ansid', _spamData.aid);
     }
 
     data.append('crumb', window.ANSWERS.crumb);
     data.append('action', actionType);
-    data.append('qid', _currentQid);
+    data.append('qid', _spamData.qid);
     data.append('abtype', 'CGV');
     data.append('desc', 'SPAM');
 
@@ -98,16 +103,11 @@ import Thanos from './Thanos';
     }).then(res => res.json());
   }
 
-  function maskSpam() {
-    // Thanos.snap(_spamNode);
-    // _spamNode.style.opacity = '0.1';
-  }
-
   function updateReportedList() {
     // only record reported question, no need to record answer
     const list = JSON.parse(window.localStorage[REPORTED_LIST]);
-    if (!_currentAid && !list.includes(_currentQid)) {
-      const newList = [...list, _currentQid];
+    if (!_spamData.aid && !list.includes(_spamData.qid)) {
+      const newList = [...list, _spamData.qid];
       if (newList.length > MAX_REPORTED_RECORD) {
         newList.shift();
       }
@@ -118,13 +118,13 @@ import Thanos from './Thanos';
 
   function showBtnOnSpamNode(reported) {
     handleHideBtn();
-    if (!_spamNode.className.includes('Pos-r')) {
-      _spamNode.className += ' Pos-r';
+    if (!_currentNode.className.includes('Pos-r')) {
+      _currentNode.className += ' Pos-r';
     }
 
     const ele = reported ? _reportedMark : _reportBtn;
     ele.style.display = 'initial';
-    _spamNode.appendChild(ele);
+    _currentNode.appendChild(ele);
   }
 
   /**
@@ -132,8 +132,8 @@ import Thanos from './Thanos';
    */
   function handleMouseenterQuestionList(e) {
     if (e.target.className.includes('qTile')) {
-      _spamNode = e.target;
-      _currentQid = _spamNode.getAttribute('data-qid');
+      _currentNode = e.target;
+      _currentQid = _currentNode.getAttribute('data-qid');
       const reported = JSON.parse(window.localStorage[REPORTED_LIST]).includes(
         _currentQid,
       );
@@ -147,33 +147,36 @@ import Thanos from './Thanos';
   }
 
   function handleMouseenterQuestionDetail(e) {
-    _spamNode = e.target;
-    _currentQid = _spamNode.getAttribute('data-ya-question-id');
+    _currentNode = e.target;
+    _currentQid = _currentNode.getAttribute('data-ya-question-id');
     _currentAid = null;
-    const reported = !_spamNode.querySelector('div>div>.rptabuse');
+    const reported = !_currentNode.querySelector('div>div>.rptabuse');
     showBtnOnSpamNode(reported);
   }
 
   function handleMouseenterAnswer(e) {
-    _spamNode = e.target;
-    if (_spamNode.id === 'ya-best-answer') {
-      _spamNode = _spamNode.firstElementChild;
+    _currentNode = e.target;
+    if (_currentNode.id === 'ya-best-answer') {
+      _currentNode = _currentNode.firstElementChild;
     }
 
-    _currentQid = _spamNode.getAttribute('data-ya-question-id');
-    _currentAid = _spamNode.getAttribute('data-ya-answer-id');
-    const reported = !_spamNode.querySelector('div>div>.rptabuse');
+    _currentQid = _currentNode.getAttribute('data-ya-question-id');
+    _currentAid = _currentNode.getAttribute('data-ya-answer-id');
+    const reported = !_currentNode.querySelector('div>div>.rptabuse');
     showBtnOnSpamNode(reported);
   }
 
   function handleReport() {
-    Thanos.snap(_spamNode);
-    return;
-    // eslint-disable-next-line no-unreachable
+    _spamData.node = _currentNode;
+    _spamData.qid = _currentQid;
+    _spamData.aid = _currentAid;
+    document.body.style.cursor = 'wait';
+
     postReport().then(() => {
-      alert('Done!');
+      Thanos.snap(_spamData.node);
       updateReportedList();
-      maskSpam();
+      alert('Done!');
+      document.body.style.cursor = '';
     });
   }
 
