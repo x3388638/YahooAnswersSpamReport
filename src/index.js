@@ -1,7 +1,7 @@
 import Thanos from './Thanos';
 
 (() => {
-  const REPORTED_LIST = '@YahooAnswersSpanReport:reportedList';
+  const REPORTED_LIST = '@YahooAnswersSpamReport:reportedList';
   const MAX_REPORTED_RECORD = 50;
   const _reportIcon = document.createElement('span');
   const _reportBtn = document.createElement('span');
